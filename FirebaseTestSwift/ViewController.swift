@@ -13,16 +13,17 @@ import Kingfisher
 class ViewController: UIViewController {
     
     // MARK : - Properties
-    let storage = Storage.storage() //인스턴스 생성
-    let image = UIImage(named: "password")
-    @IBOutlet weak var loadedImageView: UIImageView!
     let imagePickerViewController = UIImagePickerController()
+    @IBOutlet weak var loadedImageView: UIImageView!
+    
+    let storage = Storage.storage() //인스턴스 생성
+//    let image = UIImage(named: "password")
+    var image: UIImage?
     var recentUploadUrl: String?
     
     // MARK : - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         imagePickerViewController.delegate = self
     }
     
@@ -31,28 +32,26 @@ class ViewController: UIViewController {
         // 버튼 클릭시 앨범으로
         self.imagePickerViewController.sourceType = .photoLibrary
         self.present(imagePickerViewController, animated: true, completion: nil)
-        
-        upLoadImage(img: image!) //원하는 이미지 업로드
-        
+//        upLoadImage(img: UIImage) //원하는 이미지 업로드
+        guard let image = image else {
+            return
+        }
+        upLoadImage(image)
     }
     
     @IBAction func imgaeLoad(_ sender: Any) {
         guard let recentUploadUrl = recentUploadUrl else {return}
-        
         loadImage(recentUploadUrl) // 인자로 url 이 들어가야 해
-        
-        
     }
     
     // MARK : - Helpers
-    func upLoadImage(img: UIImage){
+    func upLoadImage(_ img: UIImage){
         var data = Data() // 이미지를 Data 방식으로 메모리에 저장
+        //지정한 이미지를 포함하는 데이터 개체를 JPEG 형식으로 반환, 0.8은 데이터의 품질 (1에 가까울수록 품질이 높은 것)
         data = img.jpegData(compressionQuality: 0.8)!
-        //지정한 이미지를 포함하는 데이터 개체를 JPEG 형식으로 반환, 0.8은 데이터의 품질을 나타낸것 1에 가까울수록 품질이 높은 것
         
         //Firebase 저장소에 있는 개체의 메타데이터를 나타내는 클래스, URL, 콘텐츠 유형 및 문제의 개체에 대한 FIRStorage 참조를 검색하는 데 사용
         let metaData = StorageMetadata()
-        
         metaData.contentType = "image/png" //데이터 타입을 image or png 타입
         
         // 이미지를 저장할 경로
@@ -71,7 +70,7 @@ class ViewController: UIViewController {
         
         storagePathFirebase.downloadURL{ (url, error) in
             print("업로드 후 이미지 url", url!)
-            self.recentUploadUrl = url?.absoluteString
+            self.recentUploadUrl = url?.absoluteString // url 타입을 string으로 변환 후 전역변수에 저장
         }
         
     }
@@ -89,11 +88,14 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let imagePicked = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
-            print("imagePicked", imagePicked)
-            
-            upLoadImage(img: imagePicked)
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
+            print("image", image)
+        
+//            upLoadImage(img: imagePicked)
+            upLoadImage(image)
             
             self.dismiss(animated: true, completion: nil)
         }
