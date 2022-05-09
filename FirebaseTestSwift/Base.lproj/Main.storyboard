@@ -1,24 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="FirebaseTestSwift" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" restorationIdentifier="HomeVC" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YnY-Zc-t8s">
+                                <rect key="frame" x="137" y="423" width="140" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="0fd-4o-0HI"/>
+                                    <constraint firstAttribute="height" constant="50" id="DNf-Dd-acy"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="이미지 업로드"/>
+                                <connections>
+                                    <action selector="imageUpload:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mdj-q7-qXt"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5JT-6A-qb6">
+                                <rect key="frame" x="115" y="773" width="184" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Firebase로부터 이미지 로드"/>
+                                <connections>
+                                    <action selector="imgaeLoad:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wz2-up-W2h"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="j8v-Ld-v8I">
+                                <rect key="frame" x="50" y="523" width="314" height="200"/>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="5JT-6A-qb6" firstAttribute="top" secondItem="j8v-Ld-v8I" secondAttribute="bottom" constant="50" id="7Xt-1r-cG0"/>
+                            <constraint firstItem="YnY-Zc-t8s" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Bcb-e6-yHx"/>
+                            <constraint firstItem="5JT-6A-qb6" firstAttribute="top" secondItem="YnY-Zc-t8s" secondAttribute="bottom" constant="300" id="JlN-eE-Cui"/>
+                            <constraint firstItem="5JT-6A-qb6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gMM-OK-iki"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="j8v-Ld-v8I" secondAttribute="trailing" constant="50" id="jij-4O-had"/>
+                            <constraint firstItem="j8v-Ld-v8I" firstAttribute="top" secondItem="YnY-Zc-t8s" secondAttribute="bottom" constant="50" id="s2n-pR-qyA"/>
+                            <constraint firstItem="j8v-Ld-v8I" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="v0B-Qc-vaF"/>
+                            <constraint firstItem="YnY-Zc-t8s" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vwW-cr-53S"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="loadedImageView" destination="j8v-Ld-v8I" id="gtD-RT-Km1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="113.04347826086958" y="49.553571428571423"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
